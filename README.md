@@ -42,6 +42,54 @@ const TodoInsert = ({ onInsert }) => {
 
 export default TodoInsert;
  ```
+ 
+ ### onSubmit 이벤트 설정
+ ```javascript
+ //onSubmit 이벤트 설정
+  const onSubmit = useCallback(
+    (e) => {
+      onInsert(value);
+      setValue(''); //value값 초기화
+      e.preventDefault(); //새로고침을 발생하므로 이 함수를 호출
+    },
+    [onInsert, value],
+  );
+ ```
+ 
+ ### 항목 지우기
+ ```javascript
+ const onRemove = useCallback(
+    (id) => {
+      setTodos(todos.filter((todo) => todo.id !== id));
+    },
+    [todos],
+  );
+
+ ```
+ 
+ ### onToggle 체크박스
+ ```javascript
+ const onToggle = useCallback(
+    (id) => {
+      setTodos(
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, checked: !todo.checked } : todo,
+        ),
+      );
+    },
+    [todos],
+  );
+ ```
+ 
+ 
+ ### 고유값으로 사용될 id
+  ```javascript
+  //ref를 사용하여 변수 담기
+  const nextId = useRef(4);
+  ```
+ 
+ 
+ 
 
 ## Getting Started with Create React App
 
