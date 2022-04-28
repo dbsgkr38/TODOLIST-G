@@ -1,4 +1,49 @@
-# Getting Started with Create React App
+## 이벤트 설정하기
+
+  -onSubmit을 사용한 이유는 Enter를 눌렀을 때에도 발생하기 때문이다. 
+   onClick으로 제작 하였다면 onKeyPress도추가로 작성해야 되는 번거로움이 발생한다.
+ 
+ ```javascript
+ import React, { useState, useCallback } from 'react';
+import { MdAdd } from 'react-icons/md';
+import styled from 'styled-components';
+
+const TodoInsert = ({ onInsert }) => {
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((e) => {
+    setValue(e.target.value);
+  }, []);
+
+  //onSubmit 이벤트 설정
+  const onSubmit = useCallback(
+    (e) => {
+      onInsert(value);
+      setValue(''); //value값 초기화
+      e.preventDefault(); //새로고침을 발생하므로 이 함수를 호출
+    },
+    [onInsert, value],
+  );
+
+  return (
+    <TodoInsertWrapper onSubmit={onSubmit}>
+      <input
+        type="text"
+        placeholder="할 일을 입력하세요"
+        value={value}
+        onChange={onChange}
+      />
+      <button type="submit">
+        <MdAdd />
+      </button>
+    </TodoInsertWrapper>
+  );
+};
+
+export default TodoInsert;
+ ```
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
